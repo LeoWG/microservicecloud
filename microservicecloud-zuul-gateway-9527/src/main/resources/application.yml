@@ -1,0 +1,29 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: microservicecloud-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+zuul:
+  prefix: /leo                                #设置访问必须再加个前缀
+  routes:                                     #给微服务取别名，不暴露原始名字
+    mydept.serviceId: microservicecloud-dept  #原名id
+    mydept.path: /mydept/**                   #修改后的叫mydept
+  ignored-services: microservicecloud-dept    #隐藏原来的服务名使其无法被访问到
+  #ignored-services: "*"                      #隐藏多个微服务可以用这个
+
+info:
+  app.name: leo-microcloud
+  company.name: www.leo.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
